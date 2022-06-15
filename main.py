@@ -24,7 +24,7 @@ def generator():
     arg_from_get = request.args.get('count', '')
     email_lst = []
     for i in range(int(arg_from_get)):
-        email_lst.append(f'{fake_elements.ascii_free_email()}')
+        email_lst.append(f'Email: {fake_elements.ascii_free_email()}, Name: {fake_elements.name()}')
     return '<p>\n<p>'.join(email_lst)
 
 
