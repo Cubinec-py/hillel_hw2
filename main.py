@@ -2,6 +2,8 @@ from flask import Flask, request
 from faker import Faker
 
 import csv
+import requests
+import json
 
 app = Flask(__name__)
 fake_elements = Faker()
@@ -37,6 +39,20 @@ def height_weight():
             weight.append(float(row[' "Weight(Pounds)"']) * 0.453592)
     return f'<p>Average Height: {round(sum(height) / len(height), 2)}<p>' \
            f'<p>\nAverage Weight: {round(sum(weight) / len(height), 2)}<p>'
+
+
+@app.route("/space/")
+def space():
+    try:
+        get_request = requests.get('http://api.open-notify.org/astros.json')
+        if get_request.status_code != 200:
+            return '<p>API request unsuccessful.<p>'
+        else:
+            dict_exchanges = json.loads(get_request.content)
+            number = dict_exchanges['number']
+            return f'<p>In space now {number} astronauts.<p>'
+    except requests.exceptions.ConnectionError:
+        return '<p>\nNo internet connection!\n<p>'
 
 
 if __name__ == '__main__':
