@@ -13,3 +13,12 @@ def names():
         'SELECT COUNT ( DISTINCT artist ) as value FROM tracks;'
     ).fetchone()
     return render_template('html_sample/names.html', unique_names=unique_names)
+
+
+@bp.route('/tracks/')
+def tracks():
+    db = get_db()
+    tracks = db.execute(
+        'SELECT COUNT ( id ) as value FROM tracks;'
+    ).fetchone()
+    return render_template('html_sample/tracks.html', tracks=tracks)

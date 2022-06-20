@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}№2 Tracks amount{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>Количество треков в базе: {{ tracks["value"] }}.</h1>
+        </div>
+      </header>
+    </article>
+{% endblock %}
