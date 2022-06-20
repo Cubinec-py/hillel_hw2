@@ -32,3 +32,12 @@ def tracks_genre(genre):
         'SELECT COUNT( id ) as value FROM tracks WHERE tracks.genres = ?;', (selected_genre,)
     ).fetchone()
     return render_template('html_sample/trcaks_genre.html', track_genre=track_genre, selected_genre=selected_genre)
+
+
+@bp.route('/tracks-sec/')
+def tracks_sec():
+    db = get_db()
+    tracks_sec = db.execute(
+        'SELECT title, length FROM tracks;'
+    ).fetchall()
+    return render_template('html_sample/tracks_sec.html', tracks_sec=tracks_sec)
