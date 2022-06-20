@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}№3 Track genre{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>Количество треков в базе с жанром {{ selected_genre }}: {{ track_genre["value"] }}.</h1>
+        </div>
+      </header>
+    </article>
+{% endblock %}
