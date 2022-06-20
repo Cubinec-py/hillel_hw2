@@ -1,34 +1,36 @@
-from flask import Flask, request
+from flask import request, Blueprint
 from faker import Faker
 
-import csv
 import requests
 import json
+import csv
 
-app = Flask(__name__)
 fake_elements = Faker()
 
 
-@app.route("/requirements/")
+bp = Blueprint('hw2', __name__)
+
+
+@bp.route("/requirements/")
 def requirements():
     value = []
-    with open('requirements.txt', 'r', newline='') as csv_file:
-        a = csv.reader(csv_file, delimiter=' ')
+    with open('requirements.txt') as csv_file:
+        a = csv_file.readlines()
         for i in a:
-            value.append(', '.join(i))
-    return '<p>\n<p>'.join(value)
+            value.append(f'<p>{i}<p>')
+    return ''.join(value)
 
 
-@app.route("/generate-users/")
+@bp.route("/generate-users/")
 def generator():
-    arg_from_get = request.args.get('count', '')
+    arg_from_get = request.args.get('count', default=100)
     email_lst = []
     for i in range(int(arg_from_get)):
         email_lst.append(f'Email: {fake_elements.ascii_free_email()}, Name: {fake_elements.name()}')
-    return '<p>\n<p>'.join(email_lst)
+    return '<br>'.join(email_lst)
 
 
-@app.route("/mean/")
+@bp.route("/mean/")
 def height_weight():
     height = []
     weight = []
@@ -38,10 +40,10 @@ def height_weight():
             height.append(float(row[' "Height(Inches)"']) * 2.54)
             weight.append(float(row[' "Weight(Pounds)"']) * 0.453592)
     return f'<p>Average Height: {round(sum(height) / len(height), 2)}<p>' \
-           f'<p>\nAverage Weight: {round(sum(weight) / len(height), 2)}<p>'
+           f'<p>Average Weight: {round(sum(weight) / len(height), 2)}<p>'
 
 
-@app.route("/space/")
+@bp.route("/space/")
 def space():
     try:
         get_request = requests.get('http://api.open-notify.org/astros.json')
@@ -52,8 +54,4 @@ def space():
             number = dict_exchanges['number']
             return f'<p>In space now {number} astronauts.<p>'
     except requests.exceptions.ConnectionError:
-        return '<p>\nNo internet connection!\n<p>'
-
-
-if __name__ == '__main__':
-    app.run()
+        return '<p>No internet connection!<p>'

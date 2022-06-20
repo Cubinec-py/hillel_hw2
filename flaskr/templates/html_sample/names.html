@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}№1 Names{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>Количество уникальных исполнителей: {{ unique_names["value"] }}.</h1>
+        </div>
+      </header>
+    </article>
+{% endblock %}
