@@ -41,3 +41,12 @@ def tracks_sec():
         'SELECT title, length FROM tracks;'
     ).fetchall()
     return render_template('html_sample/tracks_sec.html', tracks_sec=tracks_sec)
+
+
+@bp.route('/tracks-sec/statistics/')
+def tracks_statistics():
+    db = get_db()
+    statistics = db.execute(
+        'SELECT AVG(length) as average_duration, SUM(length) as total_duration FROM tracks;'
+    ).fetchone()
+    return render_template('html_sample/statistics.html', statistics=statistics)

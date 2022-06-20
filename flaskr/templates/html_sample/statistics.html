@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}№5 Statistics{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <article class="post">
+      <header>
+        <div>
+          <h1>Cредняя продолжительность трека: {{ statistics["average_duration"] }}сек.</h1>
+          <h1>Общая продолжительность трека: {{ statistics["total_duration"] }}сек.</h1>
+        </div>
+      </header>
+    </article>
+{% endblock %}
